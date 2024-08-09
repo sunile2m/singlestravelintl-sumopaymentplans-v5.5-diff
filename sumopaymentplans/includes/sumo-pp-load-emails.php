@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function _sumo_pp_load_emails( $emails ) {
     include_once 'abstracts/abstract-sumo-pp-email.php' ;
 
+    /*
     $emails[ 'SUMO_PP_Payment_Schedule_Email' ]                  = include( 'emails/class-sumo-pp-payment-schedule-email.php' ) ;
     $emails[ 'SUMO_PP_Payment_Plan_Invoice_Email' ]              = include( 'emails/class-sumo-pp-payment-plan-invoice-email.php' ) ;
     $emails[ 'SUMO_PP_Payment_Plan_Success_Email' ]              = include( 'emails/class-sumo-pp-payment-plan-success-email.php' ) ;
@@ -22,8 +23,9 @@ function _sumo_pp_load_emails( $emails ) {
     $emails[ 'SUMO_PP_Deposit_Balance_Payment_Completed_Email' ] = include( 'emails/class-sumo-pp-deposit-balance-payment-completed-email.php' ) ;
     $emails[ 'SUMO_PP_Deposit_Balance_Payment_Overdue_Email' ]   = include( 'emails/class-sumo-pp-deposit-balance-payment-overdue-email.php' ) ;
     $emails[ 'SUMO_PP_Payment_Awaiting_Cancel_Email' ]           = include( 'emails/class-sumo-pp-payment-awaiting-cancel-email.php' ) ;
+    */
     $emails[ 'SUMO_PP_Payment_Cancelled_Email' ]                 = include( 'emails/class-sumo-pp-payment-cancelled-email.php' ) ;
-
+    
     return $emails ;
 }
 

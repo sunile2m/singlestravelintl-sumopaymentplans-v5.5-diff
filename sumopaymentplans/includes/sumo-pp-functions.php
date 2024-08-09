@@ -5,7 +5,7 @@ if( ! defined( 'ABSPATH' ) ) {
 
 include_once('sumo-pp-conditional-functions.php') ;
 include_once('sumo-pp-template-functions.php') ;
-include_once('sumo-pp-load-emails.php') ;
+//include_once('sumo-pp-load-emails.php') ;
 include_once('deprecated/sumo-pp-deprecated-functions.php') ;
 
 function _sumo_pp_get_payment( $payment ) {
@@ -106,8 +106,10 @@ function _sumo_pp_get_timestamp( $date = '' , $base_time = 0 , $exclude_hh_mm_ss
 function _sumo_pp_get_date_to_display( $date ) {
 
     $date                       = _sumo_pp_get_date( $date ) ;
-    $date_format                = 'd-m-Y' ;
-    $time_format                = 'H:i:s' ;
+    //$date_format                = 'd-m-Y' ;
+    $date_format                = 'm-d-Y' ;
+    //$time_format                = 'H:i:s' ;
+    $time_format                = '' ;
     $wp_date_format             = '' !== get_option( 'date_format' ) ? get_option( 'date_format' ) : 'F j, Y' ;
     $wp_time_format             = '' !== get_option( 'time_format' ) ? get_option( 'time_format' ) : 'g:i a' ;
     $set_as_wp_date_time_format = 'wordpress' === get_option( SUMO_PP_PLUGIN_PREFIX . 'set_date_time_format_as' , 'default' ) ;

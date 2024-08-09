@@ -8,22 +8,7 @@ $product_title_with_installment = sprintf( __( 'Installment #%s of %s' , SUMO_PP
         ) ) ) ;
 ?>
 
-<?php
-$cname = $order->billing_first_name . " " . $order->billing_last_name;
-
-$orderdate = $order->get_date_created();
-$orderdate = date_create($orderdate);
-$orderdate = date_format($orderdate,"m/d/Y");
-
-$ordernumber = $order->get_order_number();
-?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php // echo getWooEmailHeader(); ?>
-<?php echo getWooEmailHeader_invoice($cname,$orderdate, $ordernumber); ?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php //echo getWooEmailHeader(); ?>
+<?php do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
 
 <p><?php printf( __( 'Hi, <br>Your Payment for %s from Payment #%s has been received successfully.' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $product_title_with_installment , $payment->get_payment_number() ) ; ?></p>
 
@@ -47,5 +32,4 @@ $ordernumber = $order->get_order_number();
     </tfoot>
 </table>
 
-<?php //do_action( 'woocommerce_email_footer' , $email ) ; ?>
-<?php echo getWooEmailFooter(); ?>
+<?php do_action( 'woocommerce_email_footer' , $email ) ; ?>

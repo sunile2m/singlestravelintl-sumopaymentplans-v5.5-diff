@@ -7,21 +7,8 @@ $product_title = $payment->get_formatted_product_name( array (
     'qty'  => false ,
         ) ) ;
 ?>
-<?php
-$cname = $order->billing_first_name . " " . $order->billing_last_name;
 
-$orderdate = $order->get_date_created();
-$orderdate = date_create($orderdate);
-$orderdate = date_format($orderdate,"m/d/Y");
-
-$ordernumber = $order->get_order_number();
-?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php // echo getWooEmailHeader(); ?>
-<?php echo getWooEmailHeader_invoice($cname,$orderdate, $ordernumber); ?>
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php //echo getWooEmailHeader(); ?>
+<?php do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
 
 <?php if ( $order->has_status( 'pending' ) ) : ?>
 
@@ -52,5 +39,4 @@ $ordernumber = $order->get_order_number();
 <?php if ( $payment->get_prop( 'next_payment_date' ) ) { ?>
     <p><?php printf( __( 'Please make the payment using the payment link %s on or before <strong>%s</strong>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , '<a href="' . $order->get_pay_url() . '">' . __( 'pay' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) . '</a>' , _sumo_pp_get_date_to_display( $payment->get_prop( 'next_payment_date' ) ) ) ; ?></p>
 <?php } ?>
-<?php //do_action( 'woocommerce_email_footer' , $email ) ; ?>
-<?php echo getWooEmailFooter(); ?>
+<?php do_action( 'woocommerce_email_footer' , $email ) ; ?>

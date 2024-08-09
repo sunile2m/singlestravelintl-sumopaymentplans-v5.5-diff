@@ -108,7 +108,7 @@ class SUMO_PP_Order_Item_Manager {
             return $subtotal ;
         }
 
-        $subtotal .= sprintf( __( '<p><small style="color:#777;">Balance <strong>%s</strong> payable</small></p>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , wc_price( $remaining_payable_amount , array( 'currency' => $maybe_payment_order->get_currency() ) ) ) ;
+        $subtotal .= sprintf( __( '<p class="lineitemmeta"><small style="color:#777;">Balance <strong>%s</strong> payable</small></p>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , wc_price( $remaining_payable_amount , array( 'currency' => $maybe_payment_order->get_currency() ) ) ) ;
         return $subtotal ;
     }
 
@@ -137,7 +137,19 @@ class SUMO_PP_Order_Item_Manager {
             return ;
         }
 
+        if(get_class($item) == "WC_Order_Item_Fee") {
+            return ;
+        }
+
         parse_str( $_POST[ 'items' ] , $items ) ;
+
+        if(is_admin()){
+        //      echo "<pre>Stuff:<br/>";
+        //      echo get_class($item);
+        //      print_r($item);
+        //      echo "<pre>";
+        }
+
         $product_id        = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id() ;
         $payment_data_args = array(
             'product_props' => $product_id ,

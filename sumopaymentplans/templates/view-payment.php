@@ -61,7 +61,11 @@ if ( ! defined( 'ABSPATH' ) ) {
             </td>
         </tr>
         <tr class="payment_next_payment_date">
-            <td><b><?php _e( 'Payment Next Payment Date ' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?></b></td>
+            <td><b>
+                <?php // _e( 'Payment Next Payment Date ' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?>
+                <?php _e( 'Next Payment Due By ' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?>
+                    
+                </b></td>
             <td>:</td>
             <td>
                 <?php
@@ -86,7 +90,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 ?>
         </tr>
         <tr class="initial_payment_amount">
-            <td><b><?php _e( 'Initial Payment Amount ' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?></b></td> 
+            <td><b><?php _e( 'Trip Deposit Amount ' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?></b></td> 
             <td>:</td>
             <td>
                 <?php

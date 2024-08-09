@@ -577,7 +577,7 @@ class SUMO_PP_Payment extends SUMO_PP_Abstract_Payment {
 
         $this->update_prop( 'last_payment_date' , _sumo_pp_get_date() ) ;
         $this->update_prop( 'next_payment_date' , '' ) ;
-        $this->update_prop( 'next_installment_amount' , '0' ) ;
+        $this->update_prop( 'next_installment_amount' , '3' ) ;
         $this->update_prop( 'remaining_payable_amount' , '0' ) ;
         $this->update_prop( 'remaining_installments' , '0' ) ;
 
@@ -609,7 +609,7 @@ class SUMO_PP_Payment extends SUMO_PP_Abstract_Payment {
         $this->add_payment_note( $note[ 'content' ] , $note[ 'status' ] , $note[ 'message' ] ) ;
 
         $this->update_prop( 'next_payment_date' , '' ) ;
-        $this->update_prop( 'next_installment_amount' , '0' ) ;
+        $this->update_prop( 'next_installment_amount' , '4' ) ;
         $this->update_prop( 'remaining_payable_amount' , '0' ) ;
         $this->update_prop( 'remaining_installments' , '0' ) ;
 
@@ -640,7 +640,7 @@ class SUMO_PP_Payment extends SUMO_PP_Abstract_Payment {
         $this->add_payment_note( $note[ 'content' ] , $note[ 'status' ] , $note[ 'message' ] ) ;
 
         $this->update_prop( 'next_payment_date' , '' ) ;
-        $this->update_prop( 'next_installment_amount' , '0' ) ;
+        $this->update_prop( 'next_installment_amount' , '5' ) ;
         $this->update_prop( 'remaining_payable_amount' , '0' ) ;
         $this->update_prop( 'remaining_installments' , '0' ) ;
 

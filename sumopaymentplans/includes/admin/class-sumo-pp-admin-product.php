@@ -168,7 +168,7 @@ class SUMO_PP_Admin_Product {
             ) ,
         ) ) ;
         ?>        
-        <p class="form-field <?php echo SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type_field' . ' ' . SUMO_PP_PLUGIN_PREFIX . 'fields' ; ?>">
+        <p class="aram1 form-field <?php echo SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type_field' . ' ' . SUMO_PP_PLUGIN_PREFIX . 'fields' ; ?>">
             <label for="<?php echo SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type' ; ?>"><?php _e( 'Deposit Balance Payment Due Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?></label>
             <select id="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_type" ; ?>" name="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_type" ; ?>">
                 <option value="after" <?php selected( true , 'after' === get_post_meta( $post->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type' , true ) ) ?>><?php _e( 'After' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?></option> 
@@ -179,7 +179,7 @@ class SUMO_PP_Admin_Product {
                 <span class="description"><?php _e( 'day(s) from the date of deposit payment' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?></span>
             </span>
             <span>
-                <input type="text" placeholder="<?php esc_attr_e( 'YYYY-MM-DD' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?>" id="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_before" ; ?>" name="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_before" ; ?>" value="<?php echo get_post_meta( $post->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_before' , true ) ; ?>" style="width:20%;">
+                <input type="text" NOplaceholder="<?php esc_attr_e( 'YYYY-MM-DD' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?>" id="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_before" ; ?>" name="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_before" ; ?>" value="<?php echo get_post_meta( $post->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_before' , true ) ; ?>" value="ARAM" style="width:20%;">
             </span>
             <?php if( class_exists( 'SUMO_Bookings' ) ) { ?>
                 <span>
@@ -426,18 +426,51 @@ class SUMO_PP_Admin_Product {
             'value'             => get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'max_deposit' , true ) ,
         ) ) ;
         ?>       
-        <p class="form-field <?php echo SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type_field' . ' ' . SUMO_PP_PLUGIN_PREFIX . "fields{$loop}" ; ?>">
+        <p class="aram2 form-field <?php echo SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type_field' . ' ' . SUMO_PP_PLUGIN_PREFIX . "fields{$loop}" ; ?>">
             <label for="<?php echo SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type' ; ?>"><?php _e( 'Deposit Balance Payment Due Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?></label>
             <select id="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_type{$loop}" ; ?>" name="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_type[{$loop}]" ; ?>">
-                <option value="after" <?php selected( true , 'after' === get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type' , true ) ) ?>><?php _e( 'After' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?></option> 
+                
                 <option value="before" <?php selected( true , 'before' === get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type' , true ) ) ?>><?php _e( 'Before' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?></option>
+
+                <!-- <option value="after" <?php selected( true , 'after' === get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_type' , true ) ) ?>><?php _e( 'After' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?></option> -->
+                
             </select>
-            <span>
+            
+            <!--
+            <span style="display:none !important;">
                 <input type="number" id="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_after{$loop}" ; ?>" name="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_after[{$loop}]" ; ?>" value="<?php echo '' === get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'balance_payment_due' , true ) ? get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_after' , true ) : get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'balance_payment_due' , true ) ; ?>" style="width:20%;">
                 <span class="description"><?php _e( 'day(s) from the date of deposit payment' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?></span>
             </span>
-            <span>
-                <input type="text" placeholder="<?php esc_attr_e( 'YYYY-MM-DD' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?>" id="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_before{$loop}" ; ?>" name="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_before[{$loop}]" ; ?>" value="<?php echo get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_before' , true ) ; ?>" style="width:20%;">
+            -->
+
+
+<?php
+// calculate the duedate
+
+global $post ;
+
+$product = wc_get_product( $post ) ;
+$productid = $product->get_id();
+
+$tripdate = get_field("start_date", $productid);
+$paydate = strtotime($tripdate . ' -128 days');
+
+$paydate = date("Y-m-d", $paydate);
+
+?>
+
+            <span style="display:inline !important;">
+                <input type="text" NOplaceholder="<?php esc_attr_e( 'YYYY-MM-DD' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ?>" id="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_before{$loop}" ; ?>" name="<?php echo SUMO_PP_PLUGIN_PREFIX . "pay_balance_before[{$loop}]" ; ?>" 
+
+                <?php
+                $thepaydate = get_post_meta( $variation->ID , SUMO_PP_PLUGIN_PREFIX . 'pay_balance_before' , true );
+                if($thepaydate == "") {
+                    $thepaydate = $paydate;
+                }
+                ?>
+
+                value="<?php echo $thepaydate; ?>" style="width:20%;">
+
             </span>
         </p>
         <p class="form-field <?php echo SUMO_PP_PLUGIN_PREFIX . 'set_expired_deposit_payment_as_field' . ' ' . SUMO_PP_PLUGIN_PREFIX . "fields{$loop}" ; ?>">

@@ -382,4 +382,82 @@ abstract class SUMO_PP_Abstract_Payment {
         return delete_post_meta( $this->id , "_{$context}" ) ;
     }
 
+
+
+
+
+
+
+// 2TON Added
+    public function get_formatted_product_name_2ton( $args = array () ) {
+        $args = wp_parse_args( $args , array (
+            'tips'           => true ,
+            'maybe_variable' => true ,
+            'qty'            => true ,
+            'esc_html'       => false ,
+            'page'           => 'frontend' ,
+                ) ) ;
+
+        if ( 'order' === $this->get_product_type() ) {
+            $product_title = get_option( $this->prefix . 'order_payment_plan_label' ) ;
+            $item_title    = array () ;
+
+            foreach ( $this->get_prop( 'order_items' ) as $item_id => $item ) {
+                if ( ! $product = wc_get_product( $item_id ) ) {
+                    continue ;
+                }
+
+                if ( $args[ 'maybe_variable' ] && $product->get_parent_id() ) {
+                    if ( ! $product = wc_get_product( $product->get_parent_id() ) ) {
+                        continue ;
+                    }
+                }
+
+                if ( $args[ 'esc_html' ] ) {
+                    $item_title[] = $product->get_title() . ($args[ 'qty' ] ? "x{$item[ 'qty' ]}" : '') ;
+                } else {
+                    $item_title[] = $product->get_title() . ($args[ 'qty' ] ? "&nbsp;&nbsp;x{$item[ 'qty' ]}" : '') ;
+                }
+            }
+
+            if ( $args[ 'esc_html' ] ) {
+                $product_title .= ' - ' . implode( ', ' , $item_title ) ;
+            } else if ( $args[ 'tips' ] ) {
+                $product_title = sprintf( __( '<a href="#" class="%s" data-tip="%s">%s</a>' ) , "{$this->prefix}tips" , implode( ',<br>' , $item_title ) , $product_title ) ;
+            } else if ( $args[ 'qty' ] ) {
+                $product_title .= ' --><br>' . implode( ',<br>' , $item_title ) ;
+            }
+        } else {
+            if ( ! $product = wc_get_product( $this->get_product_id() ) ) {
+                return '--' ;
+            }
+
+            if ( $args[ 'maybe_variable' ] && $product->get_parent_id() ) {
+                if ( ! $product = wc_get_product( $product->get_parent_id() ) ) {
+                    return '--' ;
+                }
+            }
+
+            if ( 'admin' === $args[ 'page' ] ) {
+                $product_url = admin_url( "post.php?post={$product->get_id()}&action=edit" ) ;
+            } else {
+                $product_url = get_permalink( $product->get_id() ) ;
+            }
+
+            $product_title = $product->get_title() ;
+            $maybe_add_qty = $args[ 'qty' ] ? "&nbsp;&nbsp;x{$this->get_product_qty()}" : '' ;
+
+            if ( $args[ 'esc_html' ] ) {
+                $product_title .= $args[ 'qty' ] ? "x{$this->get_product_qty()}" : '' ;
+            } else if ( $args[ 'tips' ] ) {
+                //$product_title = sprintf( __( '<a href="%s" class="%s" data-tip="%s%s">%s</a>' ) , $product_url , "{$this->prefix}tips" , $product_title , $maybe_add_qty , $product_title ) ;
+                $product_title = sprintf( __( '%s' ) , $product_title , $maybe_add_qty , $product_title ) ;
+            } else if ( $maybe_add_qty ) {
+                $product_title .= $maybe_add_qty ;
+            }
+        }
+        return $product_title ;
+    }
+
+
 }

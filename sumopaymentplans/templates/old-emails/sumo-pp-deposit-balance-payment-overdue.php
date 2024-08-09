@@ -25,25 +25,11 @@ if ( $payment_cron        = _sumo_pp_get_payment_cron( $payment ) ) {
 }
 $overdue_date = _sumo_pp_get_date_to_display( $scheduled_timestamp ) ;
 ?>
-<?php
-$cname = $order->billing_first_name . " " . $order->billing_last_name;
 
-$orderdate = $order->get_date_created();
-$orderdate = date_create($orderdate);
-$orderdate = date_format($orderdate,"m/d/Y");
-
-$ordernumber = $order->get_order_number();
-?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php // echo getWooEmailHeader(); ?>
-<?php echo getWooEmailHeader_invoice($cname,$orderdate, $ordernumber); ?>
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php //echo getWooEmailHeader(); ?>
+<?php do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
 
 <p><?php printf( __( 'Hi, <br>Your Balance Payment for %s from payment #%s is currently Overdue. <br>Please make the payment using the payment link %s before <strong>%s</strong>. If Payment is not received within <strong>%s</strong>, the order will be Cancelled.' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $product_title , $payment->get_payment_number() , '<a href="' . $order->get_pay_url() . '">' . __( 'pay' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) . '</a>' , $overdue_date , $overdue_date ) ; ?></p>
 
 <p><?php _e( 'Thanks' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?></p>
 
-<?php //do_action( 'woocommerce_email_footer' , $email ) ; ?>
-<?php echo getWooEmailFooter(); ?>
+<?php do_action( 'woocommerce_email_footer' , $email ) ; ?>

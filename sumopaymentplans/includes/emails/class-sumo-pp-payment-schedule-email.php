@@ -16,7 +16,8 @@ class SUMO_PP_Payment_Schedule_Email extends SUMO_PP_Abstract_Email {
     function __construct() {
         $this->id             = $this->prefix . 'payment_schedule' ;
         $this->name           = 'payment_schedule' ;
-        $this->customer_email = true ;
+        //$this->customer_email = true ;
+        $this->customer_email = false ;
         $this->title          = __( 'Payment Schedule Email' , $this->text_domain ) ;
         $this->description    = addslashes( sprintf( __( 'Payment Schedule Emails will be sent to the customers when they purchase a product using Deposit/Payment Plans.' , $this->text_domain ) ) ) ;
 

@@ -16,7 +16,8 @@ class SUMO_PP_Deposit_Balance_Payment_Invoice_Email extends SUMO_PP_Abstract_Ema
     function __construct() {
         $this->id             = $this->prefix . 'deposit_balance_payment_invoice' ;
         $this->name           = 'deposit_balance_payment_invoice' ;
-        $this->customer_email = true ;
+        //$this->customer_email = true ;
+        $this->customer_email = false ;
         $this->title          = __( 'Balance Payment Invoice - Deposit' , $this->text_domain ) ;
         $this->description    = addslashes( sprintf( __( 'Balance Payment Invoice - Deposit will be sent to the customers when the balance payment for the purchase has to be charged' , $this->text_domain ) ) ) ;
 

@@ -121,6 +121,21 @@ class SUMO_PP_Ajax {
      */
     public static function checkout_order_payment_plan() {
 
+
+
+    foreach($_POST as $name => $value) {
+        // Split the name into an array on each underscore.
+        $splitString = explode("_", $name);
+
+        print_r($name);
+        echo " - ";
+        print_r($value);
+        echo "<br/>";
+    }
+    die("death");
+
+
+
         check_ajax_referer( 'sumo-pp-checkout-order-payment-plan' , 'security' ) ;
 
         WC()->session->__unset( SUMO_PP_PLUGIN_PREFIX . 'order_payment_plan_enabled' ) ;
@@ -162,7 +177,7 @@ class SUMO_PP_Ajax {
             if( $payment->balance_payable_order_exists( 'my_account' ) ) {
                 wp_delete_post( $payment->balance_payable_order->order_id ) ;
             }
-            $next_installment_amount       = 0 ;
+            $next_installment_amount       = 1 ;
             $remaining_unpaid_installments = $payment->get_next_installment_count() + absint( $payment->get_prop( 'remaining_installments' ) ) ;
 
             for( $unpaid_installment = $payment->get_next_installment_count() ; $unpaid_installment < $remaining_unpaid_installments ; $unpaid_installment ++ ) {
@@ -194,7 +209,7 @@ class SUMO_PP_Ajax {
                 if( $payment->balance_payable_order_exists( 'my_account' ) ) {
                     wp_delete_post( $payment->balance_payable_order->order_id ) ;
                 }
-                $next_installment_amount      = 0 ;
+                $next_installment_amount      = 2 ;
                 $next_installment_count       = $payment->get_next_installment_count() ;
                 $selected_unpaid_installments = $next_installment_count + $selected_installments_count ;
 

@@ -558,7 +558,8 @@ class SUMO_PP_Order_Manager {
             if( $due_date_label_deprecated && false === strpos( $due_date_label_deprecated , '[sumo_pp_next_payment_date]' ) ) {
                 $due_date_label = $due_date_label_deprecated ;
             } else {
-                $due_date_label = __( 'Next Payment Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ;
+                //$due_date_label = __( 'Next Payment Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ;
+                $due_date_label = __( 'Final Payment Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ;
             }
 
             wc_add_order_item_meta( $renewal_item_id , __( 'Next installment amount' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , wc_price( $payment->get_next_installment_amount( $next_of_next_installment_count ) , array( 'currency' => $initial_payment_order->get_currency() ) ) , true ) ;

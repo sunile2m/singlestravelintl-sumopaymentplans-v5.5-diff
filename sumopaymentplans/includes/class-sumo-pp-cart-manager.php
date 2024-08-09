@@ -12,6 +12,7 @@ if( ! defined( 'ABSPATH' ) ) {
  */
 class SUMO_PP_Cart_Manager {
 
+
     protected static $allow_only_single_payment_product ;
 
     protected static $allow_multiple_payment_products ;
@@ -37,6 +38,7 @@ class SUMO_PP_Cart_Manager {
      * Create instance for SUMO_PP_Cart_Manager.
      */
     public static function instance() {
+
         if( is_null( self::$instance ) ) {
             self::$instance = new self() ;
         }
@@ -50,6 +52,7 @@ class SUMO_PP_Cart_Manager {
         add_filter( 'woocommerce_cart_item_name' , __CLASS__ . '::render_payment_plan_name' , 10 , 3 ) ;
         add_filter( 'woocommerce_checkout_cart_item_quantity' , __CLASS__ . '::render_payment_plan_name' , 10 , 3 ) ;
         add_filter( 'woocommerce_cart_item_price' , __CLASS__ . '::render_payment_info' , 10 , 3 ) ;
+        add_filter( 'woocommerce_cart_item_price_two' , __CLASS__ . '::render_payment_info_two' , 10 , 3 ) ;
         add_filter( 'woocommerce_checkout_cart_item_quantity' , __CLASS__ . '::render_payment_info' , 10 , 3 ) ;
         add_filter( 'woocommerce_cart_item_subtotal' , __CLASS__ . '::render_balance_payable' , 10 , 3 ) ;
         add_action( 'woocommerce_cart_totals_after_order_total' , __CLASS__ . '::render_cart_balance_payable' , 999 ) ;
@@ -293,6 +296,32 @@ class SUMO_PP_Cart_Manager {
         return $return ;
     }
 
+    // 2TON ADDED
+    public static function render_payment_info_two( $price , $cart_item , $item_key ) {
+        if( ! $payment = self::is_payment_item( $cart_item ) ) {
+            $theprice = $cart_item['data']->get_price();
+            return $theprice ;
+        }
+
+        $return = '' ;
+        if(
+                'pay-in-deposit' === $payment[ 'payment_product_props' ][ 'payment_type' ] ||
+                ('payment-plans' === $payment[ 'payment_product_props' ][ 'payment_type' ] && 'no' === get_option( SUMO_PP_PLUGIN_PREFIX . 'hide_product_price_for_payment_plans' , 'no' ))
+        ) {
+            if( is_cart() ) {
+                // $return .= wc_price( floatval( $payment[ 'payment_product_props' ][ 'product_price' ] ) ) ;
+                $return .= floatval( $payment[ 'payment_product_props' ][ 'product_price' ] ) ;
+            } else if( is_checkout() ) {
+                //$return .= $price ;
+                $return .= floatval( $payment[ 'payment_product_props' ][ 'product_price' ] ) ;
+            }
+        }
+        
+        //$return .= "<span class='yo_aram_four'>".self::get_payment_info_to_display( $cart_item )."</span>" ;
+        return $return ;
+    }
+    // 2TON ADDED
+
     public static function render_balance_payable( $product_subtotal , $cart_item , $item_key ) {
         if( self::is_payment_item( $cart_item ) ) {
             $product_subtotal .= self::get_payment_info_to_display( $cart_item , 'balance_payable' ) ;
@@ -304,9 +333,9 @@ class SUMO_PP_Cart_Manager {
         $remaining_payable_amount = self::get_cart_balance_payable_amount() ;
 
         if( $remaining_payable_amount > 0 ) {
-            echo '<tr class="' . SUMO_PP_PLUGIN_PREFIX . 'balance_payable_amount">'
-            . '<th>' . get_option( SUMO_PP_PLUGIN_PREFIX . 'balance_payable_amount_label' ) . '</th>'
-            . '<td data-title="' . get_option( SUMO_PP_PLUGIN_PREFIX . 'balance_payable_amount_label' ) . '">' . wc_price( $remaining_payable_amount ) . '</td>'
+            echo '<tr style="display:none;" class="' . SUMO_PP_PLUGIN_PREFIX . 'balance_payable_amount">'
+            . '<th class="aramtch" colspan="1">' . get_option( SUMO_PP_PLUGIN_PREFIX . 'balance_payable_amount_label' ) . ' on <span id="NO_dategoeshere"></span></th>'
+            . '<td style="text-align:right;" data-title="' . get_option( SUMO_PP_PLUGIN_PREFIX . 'balance_payable_amount_label' ) . '">' . wc_price( $remaining_payable_amount ) . '</td>'
             . '</tr>' ;
         }
     }
@@ -331,6 +360,46 @@ class SUMO_PP_Cart_Manager {
         $deposited_amount    = null ;
         $calc_deposit        = false ;
         $chosen_payment_plan = null ;
+
+
+
+
+        //global $woocommerce;
+
+
+        if($_POST) {
+            
+            
+            /*
+            foreach($_POST as $name => $value) {
+                // Split the name into an array on each underscore.
+                $splitString = explode("_", $name);
+                print_r($name);
+                echo " - ";
+                print_r($value);
+                echo "<br/>";
+            }
+            */
+
+            $optionids = $_REQUEST['trip-options'];
+
+            // add options            
+            if($optionids) {
+                foreach( $optionids as $optionid ) {
+                    //if (!in_array($optionid, $cartids)) {
+                    if ( class_exists('WooCommerce') ) {
+                        WC()->cart->add_to_cart($optionid);
+                        //echo "woocommerce is installed.<br/>";
+                    } 
+                    //}
+                }
+            }
+
+            //die("death - in manager"); 
+        }
+
+
+
 
         if( isset( $_REQUEST[ SUMO_PP_PLUGIN_PREFIX . 'payment_type' ] ) ) {
             $payment_type = wc_clean( $_REQUEST[ SUMO_PP_PLUGIN_PREFIX . 'payment_type' ] ) ;

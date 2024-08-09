@@ -9,22 +9,7 @@ $product_title = $payment->get_formatted_product_name( array (
         ) ) ;
 ?>
 
-<?php
-$cname = $order->billing_first_name . " " . $order->billing_last_name;
-
-$orderdate = $order->get_date_created();
-$orderdate = date_create($orderdate);
-$orderdate = date_format($orderdate,"m/d/Y");
-
-$ordernumber = $order->get_order_number();
-?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php // echo getWooEmailHeader(); ?>
-<?php echo getWooEmailHeader_invoice($cname,$orderdate, $ordernumber); ?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php //echo getWooEmailHeader(); ?>
+<?php do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
 
 <p><?php printf( __( 'Hi, <br>Payment #%s on %s is awaiting for cancel. To cancel the payment <a href="%s">click here</a>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->get_payment_number() , get_option( 'blogname' ) , admin_url( "post.php?post={$payment->id}&action=edit" ) ) ; ?></p>
 
@@ -43,5 +28,4 @@ _sumo_pp_get_payment_orders_table( $payment , array (
 
 <p><?php _e( 'Thanks' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?></p>
 
-<?php //do_action( 'woocommerce_email_footer' , $email ) ; ?>
-<?php echo getWooEmailFooter(); ?>
+<?php do_action( 'woocommerce_email_footer' , $email ) ; ?>

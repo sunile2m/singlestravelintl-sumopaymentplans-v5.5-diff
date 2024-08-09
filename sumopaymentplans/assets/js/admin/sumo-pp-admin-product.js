@@ -725,6 +725,8 @@ jQuery( function ( $ ) {
                 $( '#_sumo_pp_max_deposit' + i ).closest( 'p' ).hide() ;
             }
         } ,
+
+        /*
         get_pay_balance : function ( $pay_balance_type , i ) {
             $pay_balance_type = $pay_balance_type || 'after' ;
 
@@ -738,6 +740,22 @@ jQuery( function ( $ ) {
                 $( '#_sumo_pp_set_expired_deposit_payment_as' + i ).closest( 'p' ).show() ;
             }
         } ,
+        */
+
+        get_pay_balance : function ( $pay_balance_type , i ) {
+            $pay_balance_type = $pay_balance_type || 'before' ;
+
+            $( '#_sumo_pp_pay_balance_after' + i ).closest( 'span' ).hide() ;
+            $( '#_sumo_pp_pay_balance_before' + i ).closest( 'span' ).show() ;
+            $( '#_sumo_pp_set_expired_deposit_payment_as' + i ).closest( 'p' ).show() ;
+
+            if ( 'after' === $pay_balance_type ) {
+                $( '#_sumo_pp_pay_balance_after' + i ).closest( 'span' ).show() ;
+                $( '#_sumo_pp_pay_balance_before' + i ).closest( 'span' ).hide() ;
+                $( '#_sumo_pp_set_expired_deposit_payment_as' + i ).closest( 'p' ).hide() ;
+            }
+        } ,
+
         paymentPlansSelector : {
             onClickAddColumn1Plan : function ( evt ) {
                 evt.stopImmediatePropagation() ;

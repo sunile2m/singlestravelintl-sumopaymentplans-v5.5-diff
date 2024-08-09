@@ -2,30 +2,21 @@
 if ( ! defined( 'ABSPATH' ) ) {
     exit ; // Exit if accessed directly
 }
-$product_title_with_installment = sprintf( __( 'Installment #%s of %s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , sizeof( $payment->get_balance_paid_orders() ) , $payment->get_formatted_product_name( array (
+
+$payment_count                  = sizeof( $payment->get_balance_paid_orders() ) + 1 ;
+$product_title_with_installment = sprintf( __( 'Installment #%s of %s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment_count , $payment->get_formatted_product_name( array (
             'tips' => false ,
             'qty'  => false ,
         ) ) ) ;
 ?>
 
-<?php
-$cname = $order->billing_first_name . " " . $order->billing_last_name;
+<?php do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
 
-$orderdate = $order->get_date_created();
-$orderdate = date_create($orderdate);
-$orderdate = date_format($orderdate,"m/d/Y");
+<?php if ( $order->has_status( 'pending' ) ) : ?>
 
-$ordernumber = $order->get_order_number();
-?>
+    <p><?php printf( __( 'Hi, <br>Your Invoice for %s from payment #%s has been generated. The Payment details are as follows' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $product_title_with_installment , $payment->get_payment_number() ) ; ?></p>
 
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php // echo getWooEmailHeader(); ?>
-<?php echo getWooEmailHeader_invoice($cname,$orderdate, $ordernumber); ?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php //echo getWooEmailHeader(); ?>
-
-<p><?php printf( __( 'Hi, <br>Your Payment for %s from Payment #%s has been received successfully.' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $product_title_with_installment , $payment->get_payment_number() ) ; ?></p>
+<?php endif ; ?>
 
 <?php do_action( 'woocommerce_email_before_order_table' , $order->order , $sent_to_admin , $plain_text , $email ) ; ?>
 
@@ -47,5 +38,6 @@ $ordernumber = $order->get_order_number();
     </tfoot>
 </table>
 
-<?php //do_action( 'woocommerce_email_footer' , $email ) ; ?>
-<?php echo getWooEmailFooter(); ?>
+<p><?php printf( __( 'Please make the payment using the payment link %s on or before <strong>%s</strong>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , '<a href="' . $order->get_pay_url() . '">' . __( 'pay' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) . '</a>' , _sumo_pp_get_date_to_display( $payment->get_prop( 'next_payment_date' ) ) ) ; ?></p>
+
+<?php do_action( 'woocommerce_email_footer' , $email ) ; ?>

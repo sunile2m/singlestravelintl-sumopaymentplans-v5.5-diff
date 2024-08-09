@@ -16,7 +16,8 @@ class SUMO_PP_Deposit_Balance_Payment_Completed_Email extends SUMO_PP_Abstract_E
     function __construct() {
         $this->id             = $this->prefix . 'deposit_balance_payment_completed' ;
         $this->name           = 'deposit_balance_payment_completed' ;
-        $this->customer_email = true ;
+        //$this->customer_email = true ;
+        $this->customer_email = false ;
         $this->title          = __( 'Balance Payment Completed - Deposit' , $this->text_domain ) ;
         $this->description    = addslashes( sprintf( __( 'Balance Payment Completed - Deposit will be sent to the customers when the balance payment for the product purchase has been completed successfully' , $this->text_domain ) ) ) ;
 

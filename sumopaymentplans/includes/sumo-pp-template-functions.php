@@ -93,10 +93,10 @@ function _sumo_pp_get_payment_orders_table( $payment , $args = array() , $echo =
         'th_custom_attr' => '' ,
         'th_elements'    => array(
             'payments'                       => __( 'Payments' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
-            'installment-amount'             => __( 'Installment Amount' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
-            'expected-payment-date'          => __( 'Expected Payment Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
-            'modified-expected-payment-date' => __( 'Modified Expected Payment Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
-            'actual-payment-date'            => __( 'Actual Payment Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
+            'installment-amount'             => __( 'Balance Due' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
+            'expected-payment-date'          => __( 'Due Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
+            'modified-expected-payment-date' => __( 'Modified Due Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
+            //'actual-payment-date'            => __( 'Actual Payment Date' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
             'order-number'                   => __( 'Order Number' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ,
         ) ,
         'page'           => 'frontend' ,
@@ -139,15 +139,19 @@ function _sumo_pp_get_payment_orders_table( $payment , $args = array() , $echo =
                             <?php
                             if( 'order' === $payment->get_product_type() ) {
                                 if( $balance_paid_order > 0 ) {
-                                    printf( __( '<a href="%s">Installment #1 of %s</a>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $url , $payment->get_formatted_product_name( array( 'page' => $args[ 'page' ] ) ) ) ;
+                                    //printf( __( '<a href="%s">Installment #1 of %s</a>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $url , $payment->get_formatted_product_name( array( 'page' => $args[ 'page' ] ) ) ) ;
+                                    printf( __( '<a href="%s">%s</a>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $url , $payment->get_formatted_product_name( array( 'page' => $args[ 'page' ] ) ) ) ;
                                 } else {
-                                    printf( __( 'Installment #1 of %s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->get_formatted_product_name( array( 'page' => $args[ 'page' ] ) ) ) ;
+                                    //printf( __( 'Installment #1 of %s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->get_formatted_product_name( array( 'page' => $args[ 'page' ] ) ) ) ;
+                                    printf( __( '%s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->get_formatted_product_name( array( 'page' => $args[ 'page' ] ) ) ) ;
                                 }
                             } else {
                                 if( $balance_paid_order > 0 ) {
-                                    printf( __( '<a href="%s">Installment #1 of %s</a>&nbsp;&nbsp;x%s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $url , $payment->get_formatted_product_name( array( 'qty' => false , 'page' => $args[ 'page' ] ) ) , $payment->get_product_qty() ) ;
+                                    //printf( __( '<a href="%s">Installment #1 of %s</a>&nbsp;&nbsp;x%s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $url , $payment->get_formatted_product_name( array( 'qty' => false , 'page' => $args[ 'page' ] ) ) , $payment->get_product_qty() ) ;
+                                    printf( __( '<a href="%s">%s</a>&nbsp;' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $url , $payment->get_formatted_product_name( array( 'qty' => false , 'page' => $args[ 'page' ] ) ) , $payment->get_product_qty() ) ;
                                 } else {
-                                    printf( __( 'Installment #1 of %s&nbsp;&nbsp;x%s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->get_formatted_product_name( array( 'qty' => false , 'page' => $args[ 'page' ] ) ) , $payment->get_product_qty() ) ;
+                                    //printf( __( 'Installment #1 of %s&nbsp;&nbsp;x%s' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->get_formatted_product_name( array( 'qty' => false , 'page' => $args[ 'page' ] ) ) , $payment->get_product_qty() ) ;
+                                    printf( __( '%s&nbsp;' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->get_formatted_product_name( array( 'qty' => false , 'page' => $args[ 'page' ] ) ) , $payment->get_product_qty() ) ;
                                 }
                             }
                             ?>
@@ -203,7 +207,8 @@ function _sumo_pp_get_payment_orders_table( $payment , $args = array() , $echo =
                                 printf( __( '<a href="%s">#%s</a><p>Paid</p>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $url , $balance_paid_order ) ;
                             } else {
                                 if( 'admin' !== $args[ 'page' ] && $payment->balance_payable_order_exists() ) {
-                                    printf( __( '<a class="button" href="%s">Pay for #%s</a>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->balance_payable_order->get_pay_url() , $payment->balance_payable_order->order_id ) ;
+                                    // printf( __( '<a class="button" href="%s">Pay for #%s</a>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->balance_payable_order->get_pay_url() , $payment->balance_payable_order->order_id ) ;
+                                    printf( __( '<a class="button" href="%s">Pay Now</a>' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->balance_payable_order->get_pay_url() , $payment->balance_payable_order->order_id ) ;
                                 } else {
                                     echo '--' ;
                                 }

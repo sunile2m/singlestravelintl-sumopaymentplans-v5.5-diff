@@ -16,7 +16,8 @@ class SUMO_PP_Payment_Cancelled_Email extends SUMO_PP_Abstract_Email {
     function __construct() {
         $this->id             = $this->prefix . 'payment_cancelled' ;
         $this->name           = 'payment_cancelled' ;
-        $this->customer_email = true ;
+        //$this->customer_email = true ;
+        $this->customer_email = false ;
         $this->title          = __( 'Payment Cancelled' , $this->text_domain ) ;
         $this->description    = addslashes( sprintf( __( 'Payment Cancelled will be sent to the customers when the user has not paid their balance payments within the due date.' , $this->text_domain ) ) ) ;
 

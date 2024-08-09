@@ -59,6 +59,9 @@ class SUMO_PP_Product_Manager {
         add_filter( 'woocommerce_product_add_to_cart_url' , __CLASS__ . '::redirect_to_single_product' , 10 , 2 ) ;
 
         add_action( 'woocommerce_before_add_to_cart_button' , __CLASS__ . '::render_payment_type_fields' , 10 ) ;
+
+        add_action( 'aram_one' , __CLASS__ . '::render_payment_type_fields' , 10 ) ;
+
         add_filter( 'sumopaymentplans_get_single_variation_data_to_display' , __CLASS__ . '::render_variation_payment_type_fields' , 9 , 2 ) ;
         add_action( 'woocommerce_before_variations_form' , __CLASS__ . '::render_variation_payment_type_fields' , 10 ) ;
         add_action( 'woocommerce_before_single_variation' , __CLASS__ . '::render_variation_payment_type_fields' , 10 ) ;
@@ -66,7 +69,26 @@ class SUMO_PP_Product_Manager {
 
         add_filter( 'woocommerce_product_is_in_stock' , __CLASS__ . '::check_product_is_in_stock' , 99 , 2 ) ;
         add_action( 'wp_head' , __CLASS__ . '::add_custom_style' , 99 ) ;
+
+
+
+
+        add_action( 'aram_four' , __CLASS__ . '::render_payment_type_fields' , 10 ) ;
+        //add_action( 'aramthings' , __CLASS__ . '::render_variation_payment_type_fields' , 10 ) ;
+        //add_action( 'aramthings' , __CLASS__ . '::render_variation_payment_type_fields' , 10 ) ;
+
+
     }
+
+
+
+    // ARAM ADDED BELOW //
+    public static function render_aram() {
+        echo "<h1>HELLO</h1>";
+    }
+    // ARAM ADDED ABOVE //
+
+
 
     public static function get_default_props() {
         return array_map( '__return_null' , self::$product_props ) ;

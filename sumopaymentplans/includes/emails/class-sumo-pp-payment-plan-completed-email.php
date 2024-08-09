@@ -16,7 +16,8 @@ class SUMO_PP_Payment_Plan_Completed_Email extends SUMO_PP_Abstract_Email {
     function __construct() {
         $this->id             = $this->prefix . 'payment_plan_completed' ;
         $this->name           = 'payment_plan_completed' ;
-        $this->customer_email = true ;
+        //$this->customer_email = true ;
+        $this->customer_email = false ;
         $this->title          = __( 'Payment Completed – Payment Plan' , $this->text_domain ) ;
         $this->description    = addslashes( sprintf( __( 'Payment Completed – Payment Plan will be sent to the customers when the Payment Schedule for the Payment Plan has been completed successfully.' , $this->text_domain ) ) ) ;
 

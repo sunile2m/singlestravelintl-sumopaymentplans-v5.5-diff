@@ -37,16 +37,20 @@ jQuery( function( $ ) {
     } ;
 
     var single_product = {
+
         /**
          * Init single product
          */
         init : function() {
 
+            console.log("single_product - init");
+
             $( 'div._sumo_pp_wc_booking_deposit_fields' ).insertBefore( '.single_add_to_cart_button' ) ;
 
             $( document ).on( 'found_variation.wc-variation-form' , { variationForm : this } , this.onFoundVariation ) ;
             $( document ).on( 'click.wc-variation-form' , '.reset_variations' , { variationForm : this } , this.onResetVariation ) ;
-            $( document ).on( 'change' , '.variations select' , this.toggleVariations ) ;
+            $( document ).on( 'change' , '.variations select, input.variationsradio' , this.toggleVariations ) ;
+
             $( document ).on( 'change' , 'input[type=radio][name="_sumo_pp_payment_type"]' , this.togglePaymentType ) ;
             $( document ).on( 'wc_booking_form_changed' , this.bookingFormChanged ) ;
             $( document ).on( 'sumo_bookings_calculated_price' , this.bookingFormChanged ) ;
@@ -98,7 +102,10 @@ jQuery( function( $ ) {
             }
         } ,
         toggleVariations : function() {
+
+            console.log("toggleVariations");
             single_product.variation_id = $( 'input[name="variation_id"]' ).val() ;
+
 
             if ( '' !== single_product.variation_id ) {
                 $.each( $( 'form' ).find( '#_sumo_pp_single_variations' ).data( 'variations' ) , function( index , variation_id ) {
@@ -110,12 +117,18 @@ jQuery( function( $ ) {
                 single_product.onResetVariation() ;
             }
         } ,
+
         onResetVariation : function( evt , variation ) {
             $( 'span#_sumo_pp_before_single_variation, span#_sumo_pp_after_single_variation' ).html( '' ) ;
         } ,
+
         togglePaymentType : function( evt ) {
+
+            console.log("togglePaymentType");
+
             $( 'div#_sumo_pp_plans_to_choose' ).slideUp( 'fast' ) ;
             $( 'div#_sumo_pp_amount_to_choose' ).slideUp( 'fast' ) ;
+            
             single_product.showProductGetPrice() ;
 
             switch ( $( evt.currentTarget ).val() ) {
@@ -132,10 +145,16 @@ jQuery( function( $ ) {
             }
         } ,
         showProductGetPrice : function() {
+
+            console.log("showProductGetPrice");
+
             $( 'div' ).find( 'p.price' ).slideDown( 'fast' ) ;
             $( 'div.woocommerce-variation-price' ).find( 'span.price' ).slideDown( 'fast' ) ;
         } ,
         hideProductGetPrice : function() {
+
+            console.log("hideProductGetPrice");
+
             $( 'div' ).find( 'p.price' ).slideUp( 'fast' ) ;
             $( 'div.woocommerce-variation-price' ).find( 'span.price' ).slideUp( 'fast' ) ;
         } ,

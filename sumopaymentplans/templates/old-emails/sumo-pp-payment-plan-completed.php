@@ -4,31 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<?php
-
-$theordernumber = wc_get_original_order_number($payment->get_payment_number());
-
-/*
-$cname = $order->billing_first_name . " " . $order->billing_last_name;
-
-$orderdate = $order->get_date_created();
-$orderdate = date_create($orderdate);
-$orderdate = date_format($orderdate,"m/d/Y");
-
-$ordernumber = $order->get_order_number();
-*/
-?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php // echo getWooEmailHeader(); ?>
-<?php echo getWooEmailHeader_invoice($cname,$orderdate, $ordernumber); ?>
-
-<?php //do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
-<?php //echo getWooEmailHeader(); ?>
-
-<?php
-echo "<h1>".$theordernumber."</h1>";
-?>
+<?php do_action( 'woocommerce_email_header' , $email_heading , $email ) ; ?>
 
 <p><?php printf( __( 'Hi, <br>You have successfully completed the Payment Schedule for Payment #%s. Your Payment details are as follows.' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) , $payment->get_payment_number() ) ; ?></p>
 
@@ -47,5 +23,4 @@ _sumo_pp_get_payment_orders_table( $payment , array (
 
 <p><?php _e( 'Thanks' , SUMO_PP_PLUGIN_TEXT_DOMAIN ) ; ?></p>
 
-<?php //do_action( 'woocommerce_email_footer' , $email ) ; ?>
-<?php echo getWooEmailFooter(); ?>
+<?php do_action( 'woocommerce_email_footer' , $email ) ; ?>

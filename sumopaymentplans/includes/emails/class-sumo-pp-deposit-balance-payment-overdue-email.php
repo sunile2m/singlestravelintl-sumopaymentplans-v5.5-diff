@@ -16,7 +16,8 @@ class SUMO_PP_Deposit_Balance_Payment_Overdue_Email extends SUMO_PP_Abstract_Ema
     function __construct() {
         $this->id             = $this->prefix . 'deposit_balance_payment_overdue' ;
         $this->name           = 'deposit_balance_payment_overdue' ;
-        $this->customer_email = true ;
+        //$this->customer_email = true ;
+        $this->customer_email = false ;
         $this->title          = __( 'Balance Payment Overdue - Deposit' , $this->text_domain ) ;
         $this->description    = addslashes( sprintf( __( 'Balance Payment Overdue - Deposit will be sent to the customers when the balance payment for the product purchase is currently Overdue.' , $this->text_domain ) ) ) ;
 
